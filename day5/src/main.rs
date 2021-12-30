@@ -80,8 +80,33 @@ fn part_one(input: &str) -> u32 {
 }
 
 fn part_two(input: &str) -> u32 {
-    print!("part2");
-    0
+    // for 2 same pairs
+    // use hashMap
+    // if same char (aa, jj) only add if 2 second last is not same
+    // (210|aaa is not okay)(210|hbb is okay)
+    // if already exist increment else input 1
+    // in end iterate over hashmap and condition true if one with 2 exists
+
+    // condition 2
+    // track last and last-last (last of last) char (210|njk with k the current char)
+    // if char at 2 == char at 1 -> condition true
+
+    // if both true => Nice
+
+    fn nice_or_naughty(s: &str) -> NiceNaughty {
+        print!("{}", s);
+        NiceNaughty::Naughty
+    }
+
+    let mut nice_counter : u32 = 0;
+    //split the string
+    for i in  input.split('\n') {
+        match nice_or_naughty(i) {
+            NiceNaughty::Nice => nice_counter += 1,
+            NiceNaughty::Naughty => (),
+        }
+    }
+    nice_counter
 }
 
 fn main() {
