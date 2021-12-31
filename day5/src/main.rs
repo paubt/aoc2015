@@ -1,5 +1,7 @@
 use std::fs;
 use std::collections::HashSet;
+use std::collections::HashMap;
+
 
 enum NiceNaughty {
     Nice,
@@ -94,8 +96,47 @@ fn part_two(input: &str) -> u32 {
     // if both true => Nice
 
     fn nice_or_naughty(s: &str) -> NiceNaughty {
-        print!("{}", s);
-        NiceNaughty::Naughty
+        //
+        let mut two_pairs_condition: bool = false;
+        let mut letter_repeat_condition: bool = false;
+        // last and last of last char
+        let mut last_character: char = '0';
+        let mut last_of_last_character : char = '1';
+        // hashmap to count specific pair occurrence
+        let mut pair_map: HashMap<String, u32> = HashMap::new();
+
+
+        for c in s.chars() {
+            if !letter_repeat_condition {
+                if last_of_last_character == c {
+                    letter_repeat_condition = true;
+                }
+            }
+            // only add the pair if this and last two chars are not the same
+            if c != last_character {
+                let count = pair_map.entry(format!("{}{}", last_character, c)).or_insert(0);
+                *count += 1;
+            } else {
+                if c != last_of_last_character {
+                    let count = pair_map.entry(format!("{}{}", last_character, c)).or_insert(0);
+                    *count += 1;
+                }
+            }
+
+            last_of_last_character = last_character;
+            last_character = c;
+        }
+        // check there is a pair with more than 1 occurrence
+        let maximum : u32 = match pair_map.values().max() {
+            Some(m) => *m,
+            None => 0,
+        };
+
+        return if maximum > 1 && letter_repeat_condition {
+            NiceNaughty::Nice
+        } else {
+            NiceNaughty::Naughty
+        }
     }
 
     let mut nice_counter : u32 = 0;
