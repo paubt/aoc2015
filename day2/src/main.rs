@@ -2,7 +2,7 @@ use std::{fs};
 
 fn main() {
 
-    let instructions = fs::read_to_string("../dataSources/day2/input1.csv")
+    let instructions = fs::read_to_string("../dataSources/day2/input.csv")
         .expect("fail to read in file into string");
     // read in file into 2d vec of strings
     let mut dimensions_l_w_h = vec![];

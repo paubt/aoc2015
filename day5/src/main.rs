@@ -97,7 +97,6 @@ fn part_two(input: &str) -> u32 {
 
     fn nice_or_naughty(s: &str) -> NiceNaughty {
         //
-        let mut two_pairs_condition: bool = false;
         let mut letter_repeat_condition: bool = false;
         // last and last of last char
         let mut last_character: char = '0';
@@ -151,7 +150,7 @@ fn part_two(input: &str) -> u32 {
 }
 
 fn main() {
-    let instructions = fs::read_to_string("../dataSources/day5/input1.csv")
+    let instructions = fs::read_to_string("../dataSources/day5/input.csv")
         .expect("read in file failed");
 
     let answer_part_one = part_one(&instructions);
