@@ -31,7 +31,7 @@ fn part2(input: &str) -> usize {
 
 fn main() {
     // read in file into string and transform result
-    let instructions = fs::read_to_string("../dataSources/day1/input.csv")
+    let instructions = fs::read_to_string("../dataSources/day1/input1.csv")
         .expect("read in file failed");
     let answer_part_one = part1(&instructions);
     let answer_part_two = part2(&instructions);

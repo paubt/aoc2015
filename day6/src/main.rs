@@ -133,7 +133,7 @@ fn part_two(s: &str) -> u32 {
 }
 
 fn main() {
-    let instructions = fs::read_to_string("../dataSources/day6/input.csv")
+    let instructions = fs::read_to_string("../dataSources/day6/input1.csv")
         .expect("read in file failed");
 
     let answer_part_one = part_one(&instructions);
