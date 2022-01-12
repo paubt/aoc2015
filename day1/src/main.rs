@@ -31,10 +31,14 @@ fn part2(input: &str) -> usize {
 
 fn main() {
     // read in file into string and transform result
-    let instructions = fs::read_to_string("../dataSources/day1/input.csv")
-        .expect("read in file failed");
+    let instructions =
+        fs::read_to_string("../dataSources/day1/input.csv").expect("read in file failed");
     let answer_part_one = part1(&instructions);
     let answer_part_two = part2(&instructions);
+    println!("this is a test for rust on atom ");
 
-    println!("end level is {}\nfirst basement entrance at {}", answer_part_one, answer_part_two);
+    println!(
+        "end level is {}\nfirst basement entrance at {}",
+        answer_part_one, answer_part_two
+    );
 }
