@@ -2,7 +2,6 @@ use std::fs;
 
 #[derive(Debug)]
 struct Reindeer {
-    name: String,
     speed: i32,
     run_time: i32,
     rest_time: i32,
@@ -43,7 +42,6 @@ fn part_one(s: &str) -> i32 {
         let x = line.split(' ').collect::<Vec<&str>>();
         // print!("{:#?}", x);
         let new_reindeer = Reindeer {
-            name: x[0].to_string(),
             speed: x[3].parse::<i32>().unwrap(),
             run_time: x[6].parse::<i32>().unwrap(),
             rest_time: x[13].parse::<i32>().unwrap(),
@@ -61,9 +59,72 @@ fn part_one(s: &str) -> i32 {
     max_distance
 }
 
+#[derive(Debug)]
+struct ReindeerPart2 {
+    speed: i32,
+    run_time: i32,
+    period_time: i32,
+    current_distance: i32,
+    current_position_in_period: i32,
+    counter_first: i32,
+}
+
 fn part_two(s: &str) -> i32 {
-    // TODO add part_two
-    0
+    let sec: i32 = 2503;
+    let mut herd: Vec<ReindeerPart2> = vec![];
+    for line in s.split('\n') {
+        if line.is_empty() {
+            break;
+        }
+        let x = line.split(' ').collect::<Vec<&str>>();
+        // print!("{:#?}", x);
+        let new_reindeer = ReindeerPart2 {
+            speed: x[3].parse::<i32>().unwrap(),
+            run_time: x[6].parse::<i32>().unwrap(),
+            period_time: x[6].parse::<i32>().unwrap() + x[13].parse::<i32>().unwrap(),
+            current_distance: 0,
+            current_position_in_period: 0,
+            counter_first: 0,
+        };
+        herd.push(new_reindeer);
+    }
+    // repeat sec times the increment for all
+    for _ in 0..sec {
+        // increment point in period and corresponding distance change for each reindeer
+        for r in &mut herd {
+            r.current_position_in_period = r.current_position_in_period + 1;
+            // if the current position is smaller or equal than the run_time
+            if r.current_position_in_period <= r.run_time {
+                r.current_distance = r.current_distance + r.speed;
+            } else {
+                // no update of current_distance but if the current_position_in_period is higher than the
+                // period set back to 0
+                if r.current_position_in_period >= r.period_time {
+                    r.current_position_in_period = 0;
+                }
+            }
+        }
+        // determine what is the max distance traveled so far
+        let mut current_best_distance: i32 = 0;
+        for r in &herd {
+            if r.current_distance > current_best_distance {
+                current_best_distance = r.current_distance;
+            }
+        }
+        // increment all reindeer with the distance equal to current_best_distance
+        for r in &mut herd {
+            if r.current_distance == current_best_distance {
+                r.counter_first = r.counter_first + 1;
+            }
+        }
+    }
+    let mut most_times_first: i32 = 0;
+    for r in &herd {
+        if r.counter_first > most_times_first {
+            most_times_first = r.counter_first;
+        }
+    }
+    most_times_first
 }
 
 fn main() {
